@@ -8,6 +8,7 @@ var express = require("express"),
  LocalStrategy = require("passport-local"),
  methodOverride = require("method-override"),
  mongoose   = require("mongoose"),
+
  Campground = require("./models/campground"),
  Comment    = require("./models/comment"),
  User       = require("./models/user"),
@@ -17,7 +18,16 @@ var express = require("express"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index");
 
-mongoose.connect("mongodb://localhost/yelp_camp", {'useNewUrlParser': true, 'useUnifiedTopology': true, 'useFindAndModify': false }); 
+mongoose.connect(" mongodb+srv://chance:Flototum1@cluster0.a4ut4.mongodb.net/yelp_camp?retryWrites=true&w=majority", {
+    'useNewUrlParser': true,
+    'useUnifiedTopology': true,
+    'useFindAndModify': false,
+    'useCreateIndex': true
+}).then (() => {
+    console.log('connected to db');
+}).catch(err => {
+    console.log('ERROR:', err.message)
+});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
